@@ -84,12 +84,20 @@ equals.addEventListener("click", () => {
         return;
     }
 
-    let a = parseFloat(num1);
+            let a = parseFloat(num1);
             let b = parseFloat(num2);
+            if(opr === divide && b === 0){
+                display.textContent = "Cannot divide by zero"
+                num1 = "";
+                num2 = "";
+                opr = "";
+                return;
+            }
             let result = operator(opr, a, b);
             display.textContent = result;
             num1 = result;
             num2 = "";
+            opr = "";
 })
 
 clear.addEventListener("click", () => {
