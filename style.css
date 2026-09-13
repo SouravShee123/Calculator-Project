@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, #1a103c, #0d0a1a, #05030a);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #fff;
+  padding: 20px;
+}
+
+/* --- DISPLAY (Glowing Neon Digital Screen) --- */
+#display {
+  width: 320px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 2px solid rgba(0, 242, 254, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5),
+              inset 0 0 15px rgba(0, 242, 254, 0.08);
+  border-radius: 16px;
+  padding: 24px 20px;
+  font-family: 'Orbitron', monospace;
+  font-size: 38px;
+  font-weight: 700;
+  color: #00f2fe;
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+  text-align: right;
+  word-wrap: break-word;
+  word-break: break-all;
+  margin-bottom: 20px;
+}
+
+/* --- BUTTON LAYOUT CONTAINERS --- */
+.btn {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 320px;
+  margin-bottom: 12px;
+}
+
+/* Place the '0' button nicely across the bottom of digits */
+.btn .0 {
+  grid-column: span 3;
+}
+
+.operator {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 320px;
+  margin-bottom: 12px;
+}
+
+/* --- GENERAL BUTTON BASE --- */
+button {
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+/* Click Feel Effect */
+button:active {
+  transform: scale(0.92) translateY(2px) !important;
+}
+
+/* --- DIGIT BUTTONS --- */
+.btn button {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f1f5f9;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.08);
+}
+
+/* --- OPERATOR BUTTONS (+ - * /) --- */
+.operator button {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.15);
+}
+
+.operator button:hover {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+/* --- INDIVIDUAL UTILITY BUTTONS --- */
+#decimal, #backspace, #equalTo, #clear {
+  width: 320px;
+  margin-bottom: 10px;
+}
+
+/* Grid layout for decimal and backspace side-by-side */
+#decimal {
+  width: 154px;
+  display: inline-block;
+  margin-right: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #38bdf8;
+}
+
+#decimal:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+#backspace {
+  width: 154px;
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+#backspace:hover {
+  background: #f59e0b;
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+/* Equals Button (=) - Big Glowing CTA */
+#equalTo {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  color: #030712;
+  font-size: 24px;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
+}
+
+#equalTo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.7);
+}
+
+/* Clear Button */
+#clear {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+#clear:hover {
+  background: #ef4444;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
