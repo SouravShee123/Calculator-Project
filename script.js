@@ -1,17 +1,25 @@
-let num1 = "";
-let opr = "";
-let num2 = "";
-let justEvaluated = false;
+/* ==========================================================================
+   GLOBAL STATE & VARIABLES
+   ========================================================================== */
+let num1 = "";           
+let opr = "";            
+let num2 = "";          
+let justEvaluated = false; // Flag: true if = was just clicked (starts fresh on next digit)
 
+/* ==========================================================================
+   DOM ELEMENTS
+   ========================================================================== */
 const digits = document.querySelectorAll(".btn button");
-const operators = document.querySelectorAll(".operator button")
+const operators = document.querySelectorAll(".operator button");
 const display = document.getElementById("display");
 const equals = document.getElementById("equalTo");
 const clear = document.getElementById("clear");
 const decimal = document.getElementById("decimal");
 const backspace = document.getElementById("backspace");
 
-/*  functions for each operator  */
+/* ==========================================================================
+   BASIC MATH FUNCTIONS
+   ========================================================================== */
 function add(a, b) {
     return a + b;
 }
@@ -28,15 +36,19 @@ function divide(a, b) {
     return a / b;
 }
 
-/*  Access the operator by their class name instead of the content  */
+/* Map button class names ("add", "subtract", etc.) directly to JS functions */
 const oprFn = { add, subtract, multiply, divide };
 
-/*  Takes the desired operator and calls the function according to it */
+/* Calls the passed operator function on numbers a and b */
 function operator(opr, a, b) {
     return opr(a, b);
 }
 
-/*  Function to take a digit and assign it to its correct variable  */
+/* ==========================================================================
+   HELPER FUNCTIONS & LOGIC
+   ========================================================================== */
+
+/* Appends typed digit to whichever number is currently active (num1 or num2) */
 function updateVariables(value) {
     if (opr === "") {
         num1 += value;
@@ -48,7 +60,7 @@ function updateVariables(value) {
     }
 }
 
-/*  Takes all the reset values in a function so that later we dont have to write the same thing  */
+/* Resets all state variables back to initial blank state */
 function resetAll() {
     num1 = "";
     num2 = "";
@@ -56,6 +68,7 @@ function resetAll() {
     justEvaluated = false;
 }
 
+/* Executes math operation, handles rounding & div-by-zero errors, updates display */
 function calculate() {
     const a = parseFloat(num1);
     const b = parseFloat(num2);
@@ -75,6 +88,11 @@ function calculate() {
     return true;
 }
 
+/* ==========================================================================
+   EVENT LISTENERS
+   ========================================================================== */
+
+
 digits.forEach((digit) => {
     digit.addEventListener("click", () => {
         let value = digit.textContent.trim();
@@ -88,6 +106,7 @@ digits.forEach((digit) => {
     })
 });
 
+/* Operator Buttons: Handles + - * / clicks & triggers calculation if chaining */
 operators.forEach((optr) => {
     optr.addEventListener("click", () => {
         let nextOperator = oprFn[optr.className];
@@ -101,6 +120,7 @@ operators.forEach((optr) => {
         justEvaluated = false;
     });
 });
+
 
 equals.addEventListener("click", () => {
     if (num1 === "" || num2 === "" || opr === "") {
@@ -119,7 +139,7 @@ clear.addEventListener("click", () => {
     display.textContent = "0";
 })
 
-/*  Checks whichever number is being typed and only adds "." if that number doesn't already have one  */
+/* Decimal Button: Appends "." to active number if it doesn't already have one */
 decimal.addEventListener("click", () => {
     if (opr === "") {
         if (!num1.includes(".")) {
