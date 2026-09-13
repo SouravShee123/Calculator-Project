@@ -1,6 +1,8 @@
 let num1 = "";
 let opr = "";
 let num2 = "";
+let justEvaluated = false;
+
 
 const digits = document.querySelectorAll(".btn button");
 const operators = document.querySelectorAll(".operator button")
@@ -31,7 +33,7 @@ const oprFn = { add, subtract, multiply, divide };
 
 /*  Takes the desired operator and calls the function according to it */
 function operator(opr, a, b) {
-    return opr(a,b);
+    return opr(a, b);
 }
 
 /*  Function to take a digit and assign it to its correct variable  */
@@ -44,15 +46,21 @@ function updateVariables(value) {
         num2 += value;
         display.textContent = num2;
     }
-    console.log(num1);
-    console.log(num2);
 }
 
 digits.forEach((digit) => {
     digit.addEventListener("click", () => {
         let value = digit.textContent.trim(); /* access the value of the clicked button and removes all the white spaces (value = 1) */
 
-        updateVariables(value);
+        if (justEvaluated === true) {
+            num1 = "";
+            num2 = "";
+            justEvaluated = false;
+            updateVariables(value);
+        }
+        else {
+            updateVariables(value);
+        }
     })
 });
 
@@ -65,39 +73,41 @@ operators.forEach((optr) => {
             let a = parseFloat(num1);
             let b = parseFloat(num2);
             let result = operator(opr, a, b);
+            result = Math.round(result * 1000000) / 1000000 //rounds long decimals
             display.textContent = result;
             num1 = result;
             num2 = "";
         }
-        
-        opr = nextOperator;    
+
+        opr = nextOperator;
     });
 });
 
 equals.addEventListener("click", () => {
-    
-    /*  If any of three is empty , stop immediately and do nothing  
-    
-    Handles incase of '=' is clicked twice
-    */
-    if(num1 === "" || num2 === "" || opr === ""){
+
+    /*  If any of three is empty , stop immediately and do nothing  */
+    if (num1 === "" || num2 === "" || opr === "") {
         return;
     }
 
-            let a = parseFloat(num1);
-            let b = parseFloat(num2);
-            if(opr === divide && b === 0){
-                display.textContent = "Cannot divide by zero"
-                num1 = "";
-                num2 = "";
-                opr = "";
-                return;
-            }
-            let result = operator(opr, a, b);
-            display.textContent = result;
-            num1 = result;
-            num2 = "";
-            opr = "";
+    let a = parseFloat(num1);
+    let b = parseFloat(num2);
+    
+    /*  Checks for division by zero*/
+    if (opr === divide && b === 0) {
+        display.textContent = "Cannot divide by zero"
+        num1 = "";
+        num2 = "";
+        opr = "";
+        return;
+    }
+    let result = operator(opr, a, b);
+    result = Math.round(result * 1000000) / 1000000 
+    display.textContent = result;
+    num1 = result;
+    num2 = "";
+    opr = "";
+    justEvaluated = true;
 })
 
 clear.addEventListener("click", () => {
