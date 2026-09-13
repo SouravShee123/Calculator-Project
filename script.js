@@ -60,6 +60,7 @@ operators.forEach((optr) => {
     optr.addEventListener("click", () => {
         let nextOperator = oprFn[optr.className];
 
+        /*  Handles chaining (12+7+3 || 12+-7...)  */
         if (num1 !== "" && num2 !== "" && opr !== "") {
             let a = parseFloat(num1);
             let b = parseFloat(num2);
@@ -74,7 +75,21 @@ operators.forEach((optr) => {
 });
 
 equals.addEventListener("click", () => {
-    display.textContent = "dummy text";
+    
+    /*  If any of three is empty , stop immediately and do nothing  
+    
+    Handles incase of '=' is clicked twice
+    */
+    if(num1 === "" || num2 === "" || opr === ""){
+        return;
+    }
+
+    let a = parseFloat(num1);
+            let b = parseFloat(num2);
+            let result = operator(opr, a, b);
+            display.textContent = result;
+            num1 = result;
+            num2 = "";
 })
 
 clear.addEventListener("click", () => {
